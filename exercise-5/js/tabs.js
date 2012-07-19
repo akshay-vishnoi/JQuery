@@ -9,9 +9,9 @@ $(document).ready(function() {
 
 
 //4.2.3 Iterating over modules using .each. For each module, using text of h2 element as text for li that are added to ul element.
-//4.2.4 Bind a click event to the list item.
+//4.2.4, 4.2.5, 4.2.6 and 4.2.7 Bind a click event to the list item.
     $('div.module').each(function() {
-        $('<li class="div_hide_li" name=' + $(this).attr("id") + '>' + $(this).find('h2').text() + '</li>')
+        $('<li " name=' + $(this).attr("id") + '>' + $(this).find('h2').text() + '</li>')
             .bind('click', function() { 
                 $('div#' + $(this).attr("name")).show("slow");
                 $(this).addClass("current"); 
@@ -23,8 +23,8 @@ $(document).ready(function() {
     });
 
 
-//4.2.5 Showing First tab.
-    $('li.div_hide_li:first').trigger('click');
+//4.2.8 Showing First tab.
+    $('ul#module_ul li:first').trigger('click');
     
 });
 

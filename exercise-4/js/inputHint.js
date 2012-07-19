@@ -4,11 +4,12 @@ $(document).ready(function(){
 
 
 //4.1.1 & 4.2.2 Setting value of search input to text of label element and Adding class of "hint" to search input.
-    console.log($('input[name=q]').val(hint_text).removeClass().addClass('hint'));
+    console.log($('input[name=q]').val(hint_text).addClass('hint'));
 
 
 //4.1.3 Remove the label element.
     $('label[for=q]').remove();
+    console.log("Label");
     console.log($('label[for=q]'));
 
 });
@@ -16,7 +17,7 @@ $(document).ready(function(){
 
 //4.1.4 Binding focus event to search input that removes the hint text and the "hint" class
 $('input[name=q]').bind('focus', function() {
-    $(this).val("").removeClass();
+    $(this).val("").removeClass('hint');
 });
 
 
