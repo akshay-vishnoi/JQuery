@@ -15,10 +15,9 @@ $(document).ready(function(){
     $('select').append('<option>Wednesday</option>');
 
 //2.3.5 Add a new div.module to the page after the last one; put a copy of one of the existing images inside of it.
-    var temp1 = $('img');    
-    var temp2 = $(temp1)[0];
-    console.log(temp2);
-    $(temp2)
+    var img_object = $('img');    
+    var first_imgElement = $(img_object)[0];
+    $(first_imgElement)
 	.clone()
 	.appendTo($('<div>NEW DIV</div>')
 	.addClass("module")

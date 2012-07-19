@@ -3,14 +3,15 @@ $(document).ready(function() {
     $('#blog a').click(function(e) {
             e.preventDefault();
     });
+
+    $('h3').bind('click', function() {
+        var clikd_h3 = $(this);	
+        if(clikd_h3.next('p.excerpt').css('display')=="none") {
+            $('p.excerpt:visible').slideUp(200);
+            clikd_h3.next('p.excerpt').slideDown(200);
+        }
+    });
     
 });
 
-$('h3').bind('click', function() {
 
-    if($(this).next('p.excerpt').css('display')=="none") {
-        $('p.excerpt:visible').slideUp(200);
-        $(this).next('p.excerpt').slideDown(200);
-    }
-
-});
