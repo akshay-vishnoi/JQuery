@@ -10,8 +10,8 @@ $("img").each(function(index,element){console.log($(element));console.log("ALT a
 console.log("2.2.2 Traversing up to form and adding class");
 console.log($($("input[name=q][type=text]").closest("form")).addClass("form_class"));
 
-console.log("2.2.3 selecting li with class 'current bar' under #mylist removing its class and assigning its class name to next li");
-console.log($("ul#myList li[class='current bar']").removeClass(function(){console.log($(this));}).next("li").addClass("current bar"));
+console.log("2.2.3 selecting li with class 'current' under #mylist removing its class and assigning its class name to next li");
+console.log($("ul#myList li.current").removeClass(function(){console.log($(this)); return "current";}).next("li").addClass("current"));
 
 
 console.log("2.2.4 Selecting element inside #specials and traversing till submit button.");
