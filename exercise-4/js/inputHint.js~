@@ -15,9 +15,7 @@ $(document).ready(function(){
 
 
 //4.1.4 Binding focus event to search input that removes the hint text and the "hint" class
-$('input[name=q]').bind('focus', function() {
-    $(this).val("").removeClass();
-});
+$('input[name=q]').bind('focus',function(){$(this).val("").removeClass();});
 
 
 //4.1.5 Bind a blur event to the search input that restores the hint text and "hint" class if no search text was entered.
