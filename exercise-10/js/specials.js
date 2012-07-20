@@ -1,22 +1,53 @@
 $(document).ready(function() {
-	div = $('<div class = "target"></div>');
-	$('#specials').find('form').after(div);
-	$('#specials').find('select').change(function() {
-		var select = $(this);		
-		$.getJSON('data/specials.json', function(resp) {
-			var select_day, div_html="";
-			if(select.val().length > 0) {
-				select_day = resp[select.val()];
-				div_html += "<h3><b>" + select.find('option:selected').text() + "</b></h3><br/>";
-				div_html += "Title : " + select_day.title + "<br/>";
-				div_html += "Text : " + select_day.text + "<br/>";
-				div_html += "Image url : " + select_day.image + "<br/>";
-				div_html += "Color : " + select_day.color + "<br/>";
+
+	var data, select, runOnlyOnce = true;
+	div = $('<div></div>');
+	$('#specials')
+		.find('form')
+			.after(div)
+		.end()
+		.find('input')
+			.parent()
+			.remove();
+	
+	
+	$('#specials')
+		.find('select')
+		.change(function() {
+			select = $(this);
+			if(runOnlyOnce == true) {		
+				$.ajax({
+					url : 'data/specials.json',
+					type : 'GET',
+					dataType : 'json',
+
+					success : function(response) {
+							data = response;
+							runOnlyOnce = false;
+							display_div(data);
+						},
+					error : function(xhr, status) {
+							alert('Sorry, there was a problem in fetching information');
+						}
+				});
+			}else {
+				display_div(data);
 			}
-			div.html(div_html);
+		
 		});
-
-	});
-
-	$('#specials').find('input').parent().detach();
+	function display_div(data) {
+		var select_day, div_html="";
+		if(select.val().length > 0) {
+			select_day = data[select.val()];
+			div.css('color', select_day.color);			
+			div_html += "<h2>" + select_day.title + "</h2><br/>";
+			div_html += select_day.text + "<br/><br/>";
+			div_html += '<img src ="' + select_day.image + '"/><br/><br/>';
+		}
+		div.html(div_html);
+	}
 });
+
+
+//This program will load json only once on the first change of the select item.
+
