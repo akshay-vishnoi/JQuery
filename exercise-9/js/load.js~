@@ -16,4 +16,5 @@ $(document).ready(function() {
 		clikd_h3.next('div').load(clikd_h3.data("test"));
 		
 	});
+
 });
