@@ -26,15 +26,16 @@ $(document).ready(function() {
 });
 
 
-function change1() {
-	if(i <= li_count) {
-		$('#slideshow li:visible').fadeOut(400, function() {
-			current_img.val(i);    
-			$('#slideshow li:nth-child(' + i + ')').fadeIn(1500);	    
-		});
-    		i++;
-		}
-	if(i > li_count) {
-    		i = 1;
-	}
-}
+    function change1() {
+        if(i <= li_count) {
+            $('#slideshow li:visible').fadeOut(400, function(){
+		current_img.val(i);    
+		$('#slideshow li:nth-child(' + i + ')').fadeIn(1500);
+		    
+	    });
+            i++;
+        }
+        if(i > li_count) {
+            i = 1;
+        }
+    }
