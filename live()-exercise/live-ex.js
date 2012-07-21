@@ -25,7 +25,7 @@ $(document).ready(function() {
 				$('body').find('p').css('display', 'block');
 			}
 		} else {
-			clikd_div.css('border','5px dashed yellow');
+			clikd_div.addClass('highlight').siblings().removeClass('highlight');
 		}
 	});
 });

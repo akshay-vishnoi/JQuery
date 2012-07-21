@@ -30,3 +30,8 @@ button
 	position:fixed;
 	left:850px;
 }
+
+.highlight
+{
+	border:5px dashed yellow;
+}
