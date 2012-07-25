@@ -6,8 +6,7 @@ $(document).ready(function() {
 		.find('form')
 			.after(div)
 		.end()
-		.find('input')
-			.parent()
+		.find('.buttons')
 			.remove();
 	
 	
