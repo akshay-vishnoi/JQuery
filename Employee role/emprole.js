@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-	var flag = "true", emp_data;
+	var flag = true, emp_data;
 
 
 	$.ajax({
@@ -21,37 +21,51 @@ $(document).ready(function() {
 
 		for(i = 0; i < emp_data.length; i++) {
 			var container, employee_div;
-			container = $('<div class = "sub_roles"></div>');
-			employee_div = $('<div class = "inrole" style = "margin:0px; box-shadow:0px 0px;" for = "emp" id = ' + emp_data[i].id + '></div>');
-			$('.employee')
-				.append(container
-					.append(employee_div
-						.text(emp_data[i].name)
-					)
-				);
+
+			container = $('<div></div>');
+			container.attr('class', 'sub_roles');
+
+			employee_div = $('<div></div>');
+			employee_div.attr('class', 'inrole insertEmployees');
+			employee_div.attr('id', emp_data[i].id);
+			
+			employee_div.text(emp_data[i].name);
+			container.append(employee_div);
+			$('.employee').append(container);
+
 			employee_div.draggable( {	revert:true	} );
 		}
 	}
 	
-	$('.role').children().first().siblings().droppable(
+	$('.role').find('.addrole').droppable(
 		{
 			
 			drop: function(event,ui) {
 				var employee = ui.draggable, employee_id = employee.attr('id'), employee_text = employee.text(), role = $(this), todo_class_todo, todo_class_child, sub_role, left, delete_img, employee_inRole, subContainer, middleContainer, employee_name, employee_tasks, image_maxmin;
-				role.children().first().siblings().each(function() {
-					if(employee_id == $(this).attr('for')) {
+				role.find('.addrole').each(function() {
+					if(employee_id == $(this).attr('data-emp_id')) {
 						flag = false;
 					}
 				});
 
-				if(flag == "true") {
+				if(flag == true) {
 
-					sub_role = $('<div class = "sub_roles" for = ' + employee_id + '></div>');
-					left = $('<div class ="left"></div>');
-					delete_img = $('<img src = "cross_circle.png"/>');
-					employee_inRole = $('<div class = "inrole"></div>');
+					sub_role = $('<div></div>');
+					sub_role.attr('class', 'sub_roles addrole').attr('data-emp_id', employee_id);
 
-					role.append(sub_role.append(left.append(delete_img)).append(employee_inRole.text(employee_text)));
+					left = $('<div></div>');
+					left.attr('class', 'left');
+
+					delete_img = $('<img />');
+					delete_img.attr('src', 'cross_circle.png');
+
+					employee_inRole = $('<div></div>');
+					employee_inRole.attr('class', 'inrole');
+	
+					employee_inRole.text(employee_text);
+					left.append(delete_img);
+					sub_role.append(left).append(employee_inRole);
+					role.append(sub_role);
 
 					sub_role.hover(function() {
 						sub_role.find('.left').find('img').show();
@@ -65,22 +79,38 @@ $(document).ready(function() {
 					todo_class_todo = 'div .' + role.attr('id') + '_todo';
 					todo_class_child = '#' + role.attr('id') + '_child';
 
-					subContainer = $('<div class = "inrole wide task_border" for = "' + employee_id + '"></div>');
-					middleContainer = $('<div class = "mid"></div>');
-					employee_name = $('<div class = "name"></div>');
-					employee_tasks = $('<div class = "tasks"></div>');
-					image_maxmin = $('<img class = "img_task" src = "plus.png"/>');
+					subContainer = $('<div></div>');
+					subContainer.attr('class', 'inrole wide task_border').attr('data-emp_id', employee_id);
 
-					subContainer.append(middleContainer.append(employee_name.text(employee_text)).append(employee_tasks.text('Add todos for ' + employee_text + ' here').append(image_maxmin)));	
+					middleContainer = $('<div></div>');
+					middleContainer.attr('class', 'mid');
 
+					employee_name = $('<div></div>');
+					employee_name.attr('class', 'name');
+
+					employee_tasks = $('<div></div>');
+					employee_tasks.attr('class', 'tasks');
+
+					image_maxmin = $('<img />');
+					image_maxmin.attr('class', 'img_task').attr('src', 'plus.png');
+
+					task_text = 'Add todos for ' + employee_text + ' here';
+
+					employee_tasks.text(task_text);
+					employee_name.text(employee_text);
+
+					employee_tasks.append(image_maxmin);
+					middleContainer.append(employee_name).append(employee_tasks);					  
+					subContainer.append(middleContainer);	
 					$(todo_class_todo).find(todo_class_child).append(subContainer);
+
 				} else {
-					flag = "true";
+					flag = true;
 				}
 			}
 		}
 	);
-	$('[for=min_max]').toggle(
+	$('[data-min_max=min_max]').toggle(
 		function() {
 			$(this).attr('src', "plus.png");
 			$(this).parent().next().slideUp();
@@ -93,11 +123,15 @@ $(document).ready(function() {
 
 	$('.role').on('click', 'img', function() {
 		if(confirm("Are you sure, you want to delete.")) {
+
 			var emp_id, role_name, img = $(this), role_id;
-			emp_id = img.parent().parent().attr('for');
+
+			emp_id = img.parent().parent().attr('data-emp_id');
+
 			role_id = img.parentsUntil('.role').last().attr('id');
 			role_name = role_id + '_todo';
-			$('.todo').find('.' + role_name).find('[for=' + emp_id + ']').remove();
+			data_attr_check = '[data-emp_id=' + emp_id + ']';
+			$('.todo').find('.' + role_name).find(data_attr_check).remove();
 			img.parentsUntil('#' + role_id).remove();
 		}
 	});
