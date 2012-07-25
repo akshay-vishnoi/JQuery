@@ -36,15 +36,22 @@ $(document).ready(function() {
 		
 		});
 	function display_div(data) {
-		var select_day, div_html="";
+		var select_day;
+		div.html("");
 		if(select.val().length > 0) {
 			select_day = data[select.val()];
 			div.css('color', select_day.color);			
-			div_html += "<h2>" + select_day.title + "</h2><br/>";
-			div_html += select_day.text + "<br/><br/>";
-			div_html += '<img src ="' + select_day.image + '"/><br/><br/>';
+			header = $('<h2></h2>');
+			header.text(select_day.title);
+			
+			day_info = $('<p></p>');
+			day_info.text(select_day.text);
+
+			day_image = $('<img />');
+			day_image.attr('src', select_day.image);
+			div.append(header).append(day_info).append(day_image);
 		}
-		div.html(div_html);
+
 	}
 });
 
